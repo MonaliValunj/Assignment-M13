@@ -7,6 +7,7 @@ const createSlideshow = function () {
     let play = true    
     let nodes = { image: null, caption: null }
     let img = { cache: [], counter: 0 }
+    let speed = 2000 // Default speed
     
     const stopSlideShow = function () {
         clearInterval(timer)
@@ -42,12 +43,21 @@ const createSlideshow = function () {
             }
             return this
         },
+        setSpeed: function (speedValue) {
+            speed = speedValue;
+            return this;
+        },
+
+        getSpeed: function () {
+            return speed;
+        },
+
         startSlideShow: function () {
             if (arguments.length === 2) {
                 nodes.image = arguments[0]
                 nodes.caption = arguments[1]
             }
-            timer = setInterval(displayNextImage, 2000)
+            timer = setInterval(displayNextImage, speed)
             return this
         },
         createToggleHandler: function () {
@@ -85,4 +95,11 @@ window.addEventListener('load', () => {
     slideshow.loadImages(slides).startSlideShow($('image'), $('caption'))
     // PAUSE THE SLIDESHOW
     $('play_pause').onclick = slideshow.createToggleHandler()
+
+    $('set_speed').onclick = function () {
+        const newSpeed = prompt('Enter new speed (in milliseconds):');
+        if (newSpeed !== null && !isNaN(newSpeed)) {
+            slideshow.setSpeed(parseInt(newSpeed)).startSlideShow();
+        }
+    };
 })
