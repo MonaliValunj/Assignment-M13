@@ -27,13 +27,13 @@ function bankAccount(ownerName) {
     }
 }
 let account;
-  //enterName function creates a bank account using the entered name
+
   function enterName() {
     const ownerName = prompt('Enter your name:');
     if (ownerName) {
       account = bankAccount(ownerName);
-      updateOutput();
     }
+    updateOutput()
   }
   
   function deposit() {
@@ -47,19 +47,21 @@ let account;
     } else {
         alert("Please enter your name first.");
     }
+    updateOutput()
 }
 
-function withdraw() {
+function withdrawal() {
     if (account) {
         const amount = parseFloat(prompt("Enter amount to withdraw:"));
         if (!isNaN(amount)) {
-            currentAccount.withdrawal(amount);
+            account.withdrawal(amount);
         } else {
             alert("Please enter a valid amount");
         }
     } else {
         alert("Please enter your name first.");
     }
+    updateOutput()
 }
 
 function updateOutput() {
